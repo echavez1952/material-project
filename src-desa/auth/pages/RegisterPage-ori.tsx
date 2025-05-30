@@ -1,11 +1,9 @@
-import React, { useState } from "react";
 import { AuthLayout } from "../component/AuthLayout";
 import { Button, Grid, Link, TextField } from "@mui/material";
 import { Google } from "@mui/icons-material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { registerUser } from "../services/AuthServices";
-import { useAuthContext } from "../context/AuthContext";
 
 
 type RegisterFormData = {
@@ -28,7 +26,7 @@ export const RegisterPage = () => {
 
   const navigate = useNavigate();
 
-  const {registro, loginWithGoogleContext} = useAuthContext();
+// google 
 
   const onSubmit = async (data: RegisterFormData) => {
     if (data.password !== data.confirmPassword) {
@@ -37,7 +35,7 @@ export const RegisterPage = () => {
     }
 
     try {
-      const user = await registro(
+      const user = await registerUser(
         data.email,
         data.password,
         data.firstName,
@@ -49,16 +47,8 @@ export const RegisterPage = () => {
       console.error(error);
     }
   };
-
-  const handleGoogleLogin = async () => {
-    try {
-      const user = await loginWithGoogleContext();
-      if(user) navigate('/', {replace: true})
-    } catch (error) {
-      console.log("Error con login de google: ", error);
-
-    }
-  };
+  
+  // const hndleGoogleLogin
   
   return (
     <AuthLayout description="Register Page">
@@ -140,12 +130,7 @@ export const RegisterPage = () => {
           </Grid>
 
           <Grid size={{xs:12 ,sm:6}}>
-            <Button 
-              variant="contained" 
-              fullWidth 
-              startIcon={<Google />}
-              onClick={handleGoogleLogin}  
-            >
+            <Button variant="contained" fullWidth startIcon={<Google />}>
               Google
             </Button>
           </Grid>

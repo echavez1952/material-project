@@ -12,7 +12,7 @@ export const AppBox = () => {
           bgcolor: "#111",
           color: "white",
           }}
-        component="span"
+         // component="span"
       >
         Pero que hermoso es MUI
       </Box> 

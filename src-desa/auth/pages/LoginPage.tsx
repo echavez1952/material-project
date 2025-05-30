@@ -3,51 +3,59 @@ import { Google } from "@mui/icons-material";
 import { AuthLayout } from "../component/AuthLayout";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useAuthContext } from "../context/AuthContext";
+import { loginUser } from "../services/AuthServices";
+import { useAuth } from "../hooks/useAuth";
+
 
 interface LoginFormData {
   email: string;
   password: string;
-}
+};
+
+// Children Component
+// export const AppChildren = () => {
 
 export const LoginPage = () => {
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm<LoginFormData>();
 
   const navigate = useNavigate();
 
-  const { login, loginWithGoogleContext } = useAuthContext();
-
   const onSubmit = async (data: LoginFormData) => {
     console.log("Login data:", data);
-
+    // Login data:
+    // {email: 'edwinchavez1952@gmail.com', password: 'Echavez5210'}
+    
+    
+    // ejecutar mi función de loginUser
+    // verificar si el usuario existe y las credenciales son correctas
+    // si no existe tengo que mostrar un error
+    
     try {
-      const user = await login(data.email, data.password);
+      const user = await loginUser(data.email, data.password);
       if (user) {
-        console.log("Usuario logueado:", user);
-        navigate("/");
+        console.log('Usuario logueado:', user);
+      // Usuario logueado: 
+      // {firstName: 'edwin', uid: 'jJdwQ2RNL7ODc3JffhPIuoXONI52', email: 'edwinchavez1952@gmail.com', lastName: 'chavez'}
+        
+        navigate('/');
       } else {
-        console.log("No se encontró el usuario en Firestore");
+        console.log('No se encontró el usuario en Firestore');
       }
     } catch (error) {
       console.error(error);
     }
+    
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      const user = await loginWithGoogleContext();
-      if(user) navigate('/', {replace: true})
-    } catch (error) {
-      console.log("Error con login de google: ", error);
-
-    }
-  };
-
+  
   return (
+    // Execute ParentComponent
+
     <AuthLayout description="Login Page">
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Grid sx={{ margin: 2 }}>
@@ -60,8 +68,8 @@ export const LoginPage = () => {
               required: "El correo es obligatorio",
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Correo no válido",
-              },
+                message: "Correo no válido"
+              }
             })}
             error={!!errors.email}
             helperText={errors.email?.message}
@@ -78,8 +86,8 @@ export const LoginPage = () => {
               required: "La contraseña es obligatoria",
               minLength: {
                 value: 6,
-                message: "Mínimo 6 caracteres",
-              },
+                message: "Mínimo 6 caracteres"
+              }
             })}
             error={!!errors.password}
             helperText={errors.password?.message}
@@ -87,19 +95,14 @@ export const LoginPage = () => {
         </Grid>
 
         <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
-          <Grid size={{ xs: 12, sm: 6 }}>
+          <Grid size={{xs:12 ,sm:6}}>
             <Button type="submit" variant="contained" fullWidth>
               Login
             </Button>
           </Grid>
 
-          <Grid size={{ xs: 12, sm: 6 }}>
-            <Button
-              variant="contained"
-              fullWidth
-              startIcon={<Google />}
-              onClick={handleGoogleLogin}
-            >
+          <Grid size={{xs:12 ,sm:6}}>
+            <Button variant="contained" fullWidth startIcon={<Google />}>
               Google
             </Button>
           </Grid>

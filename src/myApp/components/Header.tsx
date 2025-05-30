@@ -1,31 +1,50 @@
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import { AccountCircle } from "@mui/icons-material";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../auth/context/AuthContext";
 
 export const Header = () => {
+  const { user, logout } = useAuthContext();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/auth/login', {replace: true})
+
+    } catch (error) {
+      console.error('Error al cerrar la sesion: ', error);
+    }
+  };
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Header
-            </Typography>
-            <Button color="inherit">Login</Button>
-          </Toolbar>
-        </AppBar>
-    </Box>
-  )
-}
+    <header
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "1rem 2rem",
+        backgroundColor: "#f5f5f5",
+        alignItems: "center",
+      }}
+    >
+      <h1 style={{ margin: 0 }}>🌐 Mi App</h1>
+
+      <nav style={{ display: "flex", gap: "1.5rem" }}>
+        <Link to="/">Home</Link>
+        <Link to="/about">About Us</Link>
+      </nav>
+
+      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+        <AccountCircle />
+
+        {user ? (
+          <>
+            <span>{user.firstName}</span>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        ) : (
+          <Link to="/auth/login">Login</Link>
+        )}
+      </div>
+    </header>
+  );
+};

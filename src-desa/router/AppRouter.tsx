@@ -6,12 +6,11 @@ export const AppRouter = () => {
   return (
     <Routes >
 
-        {/* Router de la sección Auth */}
-        <Route path='/auth/*' element={<AuthRoutes/>} />
+      {/* Router de la sección Auth */}
+      <Route path='/auth/*' element={<AuthRoutes/>} />
 
-        {/* Router de la applicacion */}
-        <Route path='/*' element={<MyAppRouter/>} />
-
+      {/* Router de la applicacion */}
+      <Route path='/*' element={<MyAppRouter/>} />
 
     </Routes>
   )

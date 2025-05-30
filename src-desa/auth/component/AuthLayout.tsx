@@ -6,6 +6,9 @@ interface AuthLayoutProps {
   description: string
 }
 
+// Parent Component
+// export const ParentComponent: React.FC<ParentComponentProps> = ({
+
 export const AuthLayout: React.FC<AuthLayoutProps> = ({ 
   children, 
   description = "",

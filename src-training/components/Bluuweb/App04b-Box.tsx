@@ -11,15 +11,5 @@ export const AppBox = () => {
         This Box renders as an HTML section element.
       </Box>
     </Container>
-
-
-
-
-    // <Container>
-    //   <h1>App</h1>
-    //   <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-    //     This Box renders as an HTML section element.
-    //   </Box>
-    // </Container>
   )
 }

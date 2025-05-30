@@ -1,18 +1,13 @@
-import { Grid, Typography } from "@mui/material"
-import type { ReactNode} from "react"
+import React from 'react'
+import { Grid, Typography } from '@mui/material';
 
-interface AuthLayoutProps {
-  children: ReactNode,
-  description: string
-}
-
-export const AuthLayout: React.FC<AuthLayoutProps> = ({ 
-  children, 
-  description = "",
-}) => {
+export const AppBox = () => {
   return (
-    <Grid 
-      container
+    
+
+    
+    <Grid
+     container
       spacing={1}
       alignItems="center"
       justifyContent="center"
@@ -21,8 +16,9 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
         padding: 2, 
         minHeight: "calc(100vh - 20px)", 
         boxSizing: "border-box",
-        bgcolor: '#cfe8fc'
-      }}
+        border: "1px green solid",
+        bgcolor: '#cfe8fc',
+      }} 
     >
       <Grid
         sx={{
@@ -34,10 +30,9 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
           border: "1px red solid"
         }}
       >
-        <Typography variant="body1">{description}</Typography>
+        <Typography variant="body1">Login Page</Typography>
         
-        {children}
       </Grid>
-    </Grid>
+    </Grid> 
   );
 };
